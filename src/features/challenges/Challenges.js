@@ -44,7 +44,6 @@ export const Challenges = () => {
   const user = useUserData()
 
   //user data is not persisting on page reloads
-  console.log(user)
 
 
  

@@ -38,14 +38,12 @@ export const useUserData = () => {
     const storedUser = localStorage.getItem('user');
     return storedUser ? JSON.parse(storedUser) : null;
   });
-  
+  console.log(currentUser)
   useEffect(() => {
-    if (currentUser) {
-      const updatedUser = { ...user, ...currentUser };
-      setUser(updatedUser);
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-    }
-  }, [currentUser, user]);
+    setUser(currentUser);
+    localStorage.setItem('user', JSON.stringify(currentUser));
+  }, [currentUser]);
 
   return user;
-};
+}; 
+
