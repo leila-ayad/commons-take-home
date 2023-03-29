@@ -77,6 +77,7 @@ export const Authentication = () => {
   const onSuccessAction = (response) => {
     history.push("/challenges");
     localStorage.setItem("@token", response.mockToken);
+    console.log(response)
     console.log("[LOGIN] succeeded");
   };
 
