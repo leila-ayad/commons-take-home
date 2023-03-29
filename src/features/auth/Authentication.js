@@ -5,7 +5,8 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "./auth.redux";
 
-import { Input, TEXT, PASSWORD } from "../../components/Input";
+import { Input } from "../../components/Input";
+import LogoAnimated from "../../components/LogoAnimated";
 
 const Container = styled.div`
   padding: 0 24px;
@@ -25,12 +26,14 @@ const Button = styled.div`
   text-align: center;
   border: 1px solid black;
   padding: 16px;
-  width: 200px;
+  width: 100%;
+  background-color: #3A4354;
+  color: #FFFFFF;
+  font-family: "poppins-bold"
+
 `;
 
-const Instructions = styled.ul`
-  margin-bottom: 48px;
-`;
+
 
 const ErrorContainer = styled.div`
   margin-top: 10px;
@@ -48,6 +51,8 @@ const ErrorMessage = styled.h3`
   color: white;
   font-family: "poppins-bold";
 `;
+
+
 
 const initialState = { email: "", password: "" };
 
@@ -82,31 +87,28 @@ export const Authentication = () => {
     console.log("[LOGIN] failed");
   };
 
+  
   return (
     <Container>
-      <Heading>Login</Heading>
-      <Instructions>
-        <li>
-          Implement working login page with client and server side validation
-        </li>
-        <li>Use credentials provided in the README</li>
-        <li>Upon successful login, navigate to the challenges page.</li>
-      </Instructions>
+    <LogoAnimated />
+      <Heading>Sign In</Heading>
+      
       <form>
         {/* I can't get the type used in the custom input component to work */}
         <Input
           name="email"
           type="text"
           value={formData.email}
-          placeholder="email"
+          placeholder="Email"
           onChange={(event) => handleInputChange(event, "email")}
-        ></Input>
+          ></Input>
         <Input
           name="password"
           tpe="password"
           value={formData.password}
-          placeholder="password"
+          placeholder="Password"
           onChange={(event) => handleInputChange(event, "password")}
+
         ></Input>
         <Button onClick={authenticate} component={Link}>
           LOGIN

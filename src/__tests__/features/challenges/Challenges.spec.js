@@ -28,3 +28,5 @@ describe("Challenges page", () => {
     expect(getByText("Required")).toBeInTheDocument();
   });
 });
+
+

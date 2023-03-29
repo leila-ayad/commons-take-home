@@ -5,9 +5,9 @@ const TEXT = "text";
 const PASSWORD = "password";
 
 export const INPUT_TYPES = {
-  TEXT, 
-  PASSWORD
-}
+  TEXT,
+  PASSWORD,
+};
 
 const Container = styled.div`
   width: 400px;
@@ -25,7 +25,12 @@ const StyledInput = styled.input`
   width: 100%;
   padding: 8px 6px;
   border: none;
-  border-bottom: 1px solid #3A4354;
+  border-bottom: 1px solid #3a4354;
+  &:focus {
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #FFBA05;
+  }
 `;
 
 export const Input = ({
@@ -36,7 +41,7 @@ export const Input = ({
   disabled,
   hasError = false,
   autoFocus = false,
-  type = INPUT_TYPES.TEXT
+  type = INPUT_TYPES.TEXT,
 }) => {
   return (
     <Container>
@@ -51,5 +56,5 @@ export const Input = ({
       />
       {hasError && <Error>{error}</Error>}
     </Container>
-  )
-}
+  );
+};

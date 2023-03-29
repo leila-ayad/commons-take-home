@@ -84,3 +84,13 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 You should assume we will run the same steps you did (the ones listed above). Feel free to add any notes to this README or a new file. Zip up the directory and attach to an email addressed to [nick@thecommons.earth](mailto:nick@thecommons.earth). You do not need to include a git repo.
 
 Email the same address if you have _any_ questions and if you want to give us any feedback we will be very grateful.
+
+
+Things to work on:
+
+Calling the joinChallenges() function properly
+Have option to join other challenges disable when joined
+Joining challenges Loading state
+Getting the User's data to persist on page reload
+Fixing the Authentication test suite
+Writing the Challenges test suite 

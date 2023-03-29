@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import Svg from "react-inlinesvg";
 import moment from "moment";
@@ -61,19 +61,11 @@ export const ChallengeCard = ({ challenge }) => {
   const startDate = moment().startOf(challenge.timePeriod).format(DISPLAY_DATE_FORMAT);
   const endDate = moment().endOf(challenge.timePeriod).format(DISPLAY_DATE_FORMAT);
 
-  const onSuccess = () => {
-    console.log("success!")
-  }
 
-  const onFailure = () => {
-    console.log("FAILED!")
-  }
 
   const join = async () => {
-    // TODO: implement
     console.log(challenge.id)
-    joinChallenge(challenge.id, onSuccess, onFailure)
-
+    joinChallenge(challenge.id);
   };
 
   return (
