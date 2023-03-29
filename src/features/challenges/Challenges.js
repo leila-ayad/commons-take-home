@@ -1,10 +1,11 @@
 // Reference: https://styled-components.com/
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { ChallengeCard } from "../../components/ChallengeCard";
 import { useChallengesData } from "./challenges.redux";
+import { useUserData } from "../auth/auth.redux";
 
 const Container = styled.div`
   padding: 0 24px;
@@ -40,17 +41,15 @@ const ChallengesContainer = styled.div`
 
 export const Challenges = () => {
   const challenges = useChallengesData();
-  const state = useSelector((s) => s.auth);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")))
+  const user = useUserData()
 
+  //user data is not persisting on page reloads
+  console.log(user)
+
+
+ 
   
-  useChallengesData();
-
-  //adding the user data to local storage
-  useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
-    console.log(user)
-  }, [user]);
+  
 
   return (
     <Container>
@@ -71,7 +70,7 @@ export const Challenges = () => {
           design specs.
         </li>
       </Instructions>
-      <h1>Hi {state.firstName}</h1>
+      <h1>Hi {user.firstName}</h1>
       <p>Take a challenge to earn trees.</p>
       {challenges?.length ? (
         <ChallengesContainer>
@@ -85,3 +84,4 @@ export const Challenges = () => {
     </Container>
   );
 };
+

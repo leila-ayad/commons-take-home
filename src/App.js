@@ -3,11 +3,7 @@ import { Provider } from "react-redux";
 
 import { Authentication } from "./features/auth/Authentication";
 import { configureStore } from "./store/Store";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Challenges } from "./features/challenges/Challenges";
 
 const store = configureStore();

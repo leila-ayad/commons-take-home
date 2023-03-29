@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { callApi, apiTypeBuilder } from "../../utility/api";
 
 const LOGIN = apiTypeBuilder("LOGIN");
@@ -28,4 +30,19 @@ export const LoginReducer = (state = initialState, action) => {
     default:
       return state;
   }
+};
+
+export const useUserData = () => {
+  const currentUser = useSelector((s) => s.auth.user);
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+  console.log(currentUser)
+  useEffect(() => {
+    setUser(currentUser);
+    localStorage.setItem('user', JSON.stringify(currentUser));
+  }, [currentUser]);
+
+  return user;
 };

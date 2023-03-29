@@ -27,13 +27,10 @@ const Button = styled.div`
   border: 1px solid black;
   padding: 16px;
   width: 100%;
-  background-color: #3A4354;
-  color: #FFFFFF;
-  font-family: "poppins-bold"
-
+  background-color: #3a4354;
+  color: #ffffff;
+  font-family: "poppins-bold";
 `;
-
-
 
 const ErrorContainer = styled.div`
   margin-top: 10px;
@@ -51,8 +48,6 @@ const ErrorMessage = styled.h3`
   color: white;
   font-family: "poppins-bold";
 `;
-
-
 
 const initialState = { email: "", password: "" };
 
@@ -77,7 +72,7 @@ export const Authentication = () => {
   const onSuccessAction = (response) => {
     history.push("/challenges");
     localStorage.setItem("@token", response.mockToken);
-    console.log(response)
+    console.log(response);
     console.log("[LOGIN] succeeded");
   };
 
@@ -88,12 +83,11 @@ export const Authentication = () => {
     console.log("[LOGIN] failed");
   };
 
-  
   return (
     <Container>
-    <LogoAnimated />
+      <LogoAnimated />
       <Heading>Sign In</Heading>
-      
+
       <form>
         {/* I can't get the type used in the custom input component to work */}
         <Input
@@ -102,14 +96,13 @@ export const Authentication = () => {
           value={formData.email}
           placeholder="Email"
           onChange={(event) => handleInputChange(event, "email")}
-          ></Input>
+        ></Input>
         <Input
           name="password"
-          tpe="password"
+          type="password"
           value={formData.password}
           placeholder="Password"
           onChange={(event) => handleInputChange(event, "password")}
-
         ></Input>
         <Button onClick={authenticate} component={Link}>
           LOGIN

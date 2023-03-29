@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import LogoAnimation from '../assets/logo/LogoAnimation.gif'
-import LogoStatic from "../assets/logo/LogoStatic.png"
+// import LogoStatic from "../assets/logo/LogoStatic.png"
 
 const Container = styled.div`
   display: flex;
@@ -38,15 +38,15 @@ const Logo = styled.img`
   cursor: pointer;
 `
 const LogoAnimated = () => {
-  const [isPlaying, setIsPlaying] = useState(false)
+//   const [isPlaying, setIsPlaying] = useState(false)
 
-const handleMouseEnter = () => {
-  setIsPlaying(true)
-}
+// const handleMouseEnter = () => {
+//   setIsPlaying(true)
+// }
 
-const handleMouseLeave = () => {
-  setIsPlaying(false)
-}
+// const handleMouseLeave = () => {
+//   setIsPlaying(false)
+// }
 
   return (
     <Container>
