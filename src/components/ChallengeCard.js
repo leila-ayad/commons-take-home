@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Svg from "react-inlinesvg";
 import moment from "moment";
@@ -85,11 +85,7 @@ export const ChallengeCard = ({ challenge }) => {
     console.log(error);
   };
   
-  useEffect(() => {
-    const isDisabled = joined !== null && joined !== challenge.id;
-    console.log(isDisabled)
-  }, [joined])
-
+  
 
   return (
     <Container>
@@ -98,7 +94,7 @@ export const ChallengeCard = ({ challenge }) => {
       <DateRange>
         {startDate} - {endDate}
       </DateRange>
-      <Button onClick={join}>
+      <Button onClick={join} disabled={joined !== challenge.id && joined !== null ? true : false}>
         Join
       </Button>
     </Container>
