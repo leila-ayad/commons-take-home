@@ -50,11 +50,7 @@ export const Challenges = () => {
   
   const currentUser = getUser()
 
-  
 
- 
-  
-  
 
   return (
     <Container>

@@ -91,6 +91,5 @@ Things to work on:
 Calling the joinChallenges() function properly
 Have option to join other challenges disable when joined
 Joining challenges Loading state
-Getting the User's data to persist on page reload
 Fixing the Authentication test suite
 Writing the Challenges test suite 
