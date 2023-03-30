@@ -13,15 +13,15 @@ export const fetchChallenges = () =>
   });
 
 // Handle returned userChallenge in reducer below or feel free to implement an alternative data fetch/state management solution
-export const joinChallenge = (challengeId) => {
-  callApi({
+export const joinChallenge = (challengeId, onSuccess, onFailure) => {
+  return callApi({
     type: JOIN_CHALLENGE,
     method: "POST",
     body: { challengeId },
     endpoint: `/interviews/challenges/${challengeId}`,
+    onSuccess: onSuccess,
+    onFailure: onFailure
   });
-
-  console.log("In joinChallenge", challengeId);
 };
 
 export const initialState = {

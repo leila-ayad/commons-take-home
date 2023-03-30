@@ -88,7 +88,6 @@ Email the same address if you have _any_ questions and if you want to give us an
 
 Things to work on:
 
-Calling the joinChallenges() function properly
 Have option to join other challenges disable when joined
 Joining challenges Loading state
 Fixing the Authentication test suite

@@ -45,7 +45,6 @@ export const callApi = ({
   requestPayload,
   meta,
 }) => async (dispatch) => {
-  console.log("I'm here")
   dispatch({ type: type.request, payload: requestPayload });
   try {
     const res = await makeApiRequest({
@@ -56,7 +55,6 @@ export const callApi = ({
       noStringify,
     });
     const json = await res.json();
-    console.log(json)
     if (res.status !== 200) {
       throw json;
     }

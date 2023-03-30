@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Svg from "react-inlinesvg";
 import moment from "moment";
@@ -51,10 +51,16 @@ const Button = styled.button`
   position: absolute;
   bottom: 0;
   margin-bottom: 16px;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
 
 export const ChallengeCard = ({ challenge }) => {
   const dispatch = useDispatch();
+  const [joined, setJoined] = useState(null);
 
   const DISPLAY_DATE_FORMAT = "MMMM D, YYYY";
 
@@ -67,9 +73,22 @@ export const ChallengeCard = ({ challenge }) => {
     .format(DISPLAY_DATE_FORMAT);
 
   const join = async () => {
-    console.log(challenge.id);
-    dispatch(joinChallenge(challenge.id));
+    dispatch(joinChallenge(challenge.id, onSuccess, onFailure));
   };
+
+  const onSuccess = (response) => {
+    console.log(response);
+    setJoined(challenge.id)
+  };
+
+  const onFailure = (error) => {
+    console.log(error);
+  };
+  
+  useEffect(() => {
+    const isDisabled = joined !== null && joined !== challenge.id;
+    console.log(isDisabled)
+  }, [joined])
 
 
   return (
@@ -79,7 +98,9 @@ export const ChallengeCard = ({ challenge }) => {
       <DateRange>
         {startDate} - {endDate}
       </DateRange>
-      <Button onClick={join}>JOIN</Button>
+      <Button onClick={join}>
+        Join
+      </Button>
     </Container>
   );
 };
