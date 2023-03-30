@@ -22,6 +22,7 @@ export const initialState = {
 export const LoginReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN.success:
+      localStorage.setItem('user', JSON.stringify(action.payload.mockUser))
       return {
         ...state,
         user: action.payload.mockUser,
@@ -32,18 +33,4 @@ export const LoginReducer = (state = initialState, action) => {
   }
 };
 
-export const useUserData = () => {
-  const currentUser = useSelector((s) => s.auth.user);
-  const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
-  console.log(currentUser)
-  useEffect(() => {
-    setUser(currentUser);
-    localStorage.setItem('user', JSON.stringify(currentUser));
-  }, [currentUser]);
-
-  return user;
-}; 
 

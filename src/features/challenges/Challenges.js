@@ -41,10 +41,16 @@ const ChallengesContainer = styled.div`
 
 export const Challenges = () => {
   const challenges = useChallengesData();
-  const user = useUserData()
 
-  //user data is not persisting on page reloads
+//fetch currentUser data from localStorage
+  const getUser = () => {
+   const user = localStorage.getItem('user')
+   return user ? JSON.parse(user) : null
+  }
+  
+  const currentUser = getUser()
 
+  
 
  
   
@@ -69,7 +75,7 @@ export const Challenges = () => {
           design specs.
         </li>
       </Instructions>
-      <h1>Hi {user.firstName}</h1>
+      <h1>Hi {currentUser.firstName}</h1>
       <p>Take a challenge to earn trees.</p>
       {challenges?.length ? (
         <ChallengesContainer>
