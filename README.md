@@ -86,9 +86,12 @@ You should assume we will run the same steps you did (the ones listed above). Fe
 Email the same address if you have _any_ questions and if you want to give us any feedback we will be very grateful.
 
 
-Things to work on:
+Hi Nick! 
 
-Have option to join other challenges disable when joined
-Joining challenges Loading state
-Fixing the Authentication test suite
-Writing the Challenges test suite 
+Thanks for reviewing this take-home. Can you focus your feedback on the topics below?
+
+1. In Authentication.js, I initialize an errorMessage and hasErrorMessage slice of state. I don't pass them to the <Input/> components. Would you have handled this differently? 
+
+2. I know my testing suites are really lacking. Can you talk me through getting the tests to render the <Challenges/> component? Do you know a good online course to take to learn testing? I also would love any tips/resources you know of to help debug tests.
+
+3. Would you have handled disabling the buttons after joining (lines 95-102 in Challenges.js) differently? 

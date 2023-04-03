@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Svg from "react-inlinesvg";
 import moment from "moment";
@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 
 import { CHALLENGE_ICONS } from "../constants/challenges";
 import { joinChallenge } from "../features/challenges/challenges.redux";
+import { AiOutlineCheck } from "react-icons/ai"
 
 const Container = styled.div`
   width: 155px;
@@ -58,9 +59,8 @@ const Button = styled.button`
   }
 `;
 
-export const ChallengeCard = ({ challenge }) => {
+export const ChallengeCard = ({ challenge, joined, onJoin }) => {
   const dispatch = useDispatch();
-  const [joined, setJoined] = useState(null);
 
   const DISPLAY_DATE_FORMAT = "MMMM D, YYYY";
 
@@ -77,15 +77,13 @@ export const ChallengeCard = ({ challenge }) => {
   };
 
   const onSuccess = (response) => {
-    console.log(response);
-    setJoined(challenge.id)
+    console.log("Success: ", response);
+    onJoin(challenge.id);
   };
 
   const onFailure = (error) => {
-    console.log(error);
+    console.log("Failure: ", error);
   };
-  
-  
 
   return (
     <Container>
@@ -94,9 +92,13 @@ export const ChallengeCard = ({ challenge }) => {
       <DateRange>
         {startDate} - {endDate}
       </DateRange>
-      <Button onClick={join} disabled={joined !== challenge.id && joined !== null ? true : false}>
-        Join
-      </Button>
+      {joined ? (
+        <Button onClick={join} disabled={joined === challenge.id ? false : true}>
+          {joined === challenge.id ? <AiOutlineCheck/> :  `Join`}
+        </Button>
+      ) : (
+        <Button onClick={join}>Join</Button>
+      )}
     </Container>
   );
 };

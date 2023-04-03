@@ -1,11 +1,10 @@
 // Reference: https://styled-components.com/
 import { useState } from "react";
-import { useSelector } from "react-redux";
+
 import styled from "styled-components";
 
 import { ChallengeCard } from "../../components/ChallengeCard";
 import { useChallengesData } from "./challenges.redux";
-import { useUserData } from "../auth/auth.redux";
 
 const Container = styled.div`
   padding: 0 24px;
@@ -13,22 +12,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const Heading = styled.h1`
-  text-align: center;
-  margin-bottom: 24px;
-  font-family: "poppins-bold";
-`;
-
-const Subheading = styled.h2`
-  text-align: center;
-  margin-bottom: 24px;
-  font-family: "poppins-bold";
-`;
-
-const Instructions = styled.ul`
-  margin-bottom: 48px;
+  margin-top: 48px;
 `;
 
 const ChallengesContainer = styled.div`
@@ -40,49 +24,36 @@ const ChallengesContainer = styled.div`
 `;
 
 export const Challenges = () => {
+  const [joinedIndex, setJoinedIndex] = useState(null);
+
   const challenges = useChallengesData();
+  console.log(challenges)
 
-//fetch currentUser data from localStorage
+  //fetch currentUser data from localStorage
   const getUser = () => {
-   const user = localStorage.getItem('user')
-   return user ? JSON.parse(user) : null
-  }
-  
-  const currentUser = getUser()
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user) : null;
+  };
 
-
+  const currentUser = getUser();
 
   return (
     <Container>
-      <Heading>Challenges</Heading>
-      <Subheading>Required</Subheading>
-      <Instructions>
-        <li>
-          Display challenge cards according to design spec provided in the
-          README
-        </li>
-        <li>Implement ability to join challenges</li>
-        <li>If one challenge is joined, disable ability to join others</li>
-      </Instructions>
-      <Subheading>Optional</Subheading>
-      <Instructions>
-        <li>
-          Display "loading" state when attempting to join challenge according to
-          design specs.
-        </li>
-      </Instructions>
       <h1>Hi {currentUser.firstName}</h1>
       <p>Take a challenge to earn trees.</p>
       {challenges?.length ? (
         <ChallengesContainer>
           {challenges.map((challenge) => (
-            <ChallengeCard challenge={challenge}></ChallengeCard>
+            <ChallengeCard
+              challenge={challenge}
+              joined={joinedIndex}
+              onJoin={() => setJoinedIndex(challenge.id)}
+            ></ChallengeCard>
           ))}
         </ChallengesContainer>
       ) : (
-        <p>retrieving challenges</p>
+        <p>Retrieving Challenges...</p>
       )}
     </Container>
   );
 };
-

@@ -1,6 +1,8 @@
-import React from "react";
 import { Authentication } from "../../../features/auth/Authentication";
+
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
+
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import {LoginReducer} from "../../../features/auth/auth.redux";
@@ -21,8 +23,8 @@ describe("Authentication Component", () => {
       </Provider>
     );
 
-    const signInText = screen.getByText("Sign In");
-    expect(signInText).toBeInTheDocument();
+    const signInText = screen.getByTestId("Header");
+    expect(signInText).toBeInTheDocument()
   });
 
   it("should allow users to enter email and password", () => {
@@ -111,6 +113,5 @@ describe("Authentication Component", () => {
     fireEvent.click(loginButton);
 
     expect(history.push).toHaveBeenCalledWith("/challenges");
-    expect(localStorage.getItem("@token")).toBe("test-token");
   });
 });

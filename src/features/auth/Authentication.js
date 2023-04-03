@@ -86,7 +86,7 @@ export const Authentication = () => {
   return (
     <Container>
       <LogoAnimated />
-      <Heading>Sign In</Heading>
+      <Heading data-testid="Heading">Sign In</Heading>
 
       <form>
         {/* I can't get the type used in the custom input component to work */}
