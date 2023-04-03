@@ -1,7 +1,9 @@
 import { Authentication } from "../../../features/auth/Authentication";
 
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { toBeInTheDocument } from '@testing-library/jest-dom/';
+
 
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
@@ -23,7 +25,7 @@ describe("Authentication Component", () => {
       </Provider>
     );
 
-    const signInText = screen.getByTestId("Header");
+    const signInText = screen.getByTestId("Heading");
     expect(signInText).toBeInTheDocument()
   });
 
@@ -46,7 +48,7 @@ describe("Authentication Component", () => {
     expect(passwordInput.value).toBe("password");
   });
 
-  it("should display an error message when user inputs wrong email", () => {
+  it("should display an error message when user inputs wrong email", async () => {
     const mockFailureAction = jest.fn(
       (email, password, onSuccess, onFailure) => {
         return onFailure({ error: "Email Not Found" });
@@ -77,41 +79,44 @@ describe("Authentication Component", () => {
     fireEvent.change(passwordInput, { target: { value: "password" } });
 
     fireEvent.click(loginButton);
-
-    const errorMessage = screen.getByText("Email Not Found");
-    expect(errorMessage).toBeInTheDocument();
+    await waitFor(() => {
+      const errorMessage = screen.getByText("Email Not Found");
+      expect(errorMessage).toBeInTheDocument();
+    });
   });
 
-  it("should navigate to challenges page when login succeeds", () => {
+  it("should navigate to challenges page when login succeeds", async () => {
     const mockSuccessAction = jest.fn(() =>
       Promise.resolve({ mockToken: "test-token" })
     );
-    //why isn't it using the login function?
     jest.mock("../../../features/auth/auth.redux", () => ({
-      login: (email, password, onSuccess, onFailure) =>
-        mockSuccessAction(email, password, onSuccess, onFailure),
+      login: () => mockSuccessAction(),
     }));
-
+  
     const history = { push: jest.fn() };
+    const onSuccessAction = jest.fn();
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <Authentication history={history} />
+          <Authentication history={history} onSuccess={onSuccessAction} />
         </BrowserRouter>
       </Provider>
     );
-
+  
     const emailInput = screen.getByPlaceholderText("Email");
     const passwordInput = screen.getByPlaceholderText("Password");
     const loginButton = screen.getByText("LOGIN");
-
+  
     fireEvent.change(emailInput, {
       target: { value: "testuser@thecommons.earth" },
     });
     fireEvent.change(passwordInput, { target: { value: "mockUserPassword" } });
-
+  
     fireEvent.click(loginButton);
-
-    expect(history.push).toHaveBeenCalledWith("/challenges");
+  
+    await waitFor(() => {
+      expect(onSuccessAction).toHaveBeenCalled();
+      expect(history.push).toHaveBeenCalledWith("/challenges");
+    });
   });
 });
