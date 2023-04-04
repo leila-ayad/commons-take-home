@@ -52,7 +52,7 @@ export const Challenges = () => {
           ))}
         </ChallengesContainer>
       ) : (
-        <p>Retrieving Challenges...</p>
+        <p data-testid="loading">Retrieving Challenges...</p>
       )}
     </Container>
   );

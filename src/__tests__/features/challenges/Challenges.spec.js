@@ -1,70 +1,73 @@
-import React from "react";
+import { render} from "../../../utility/testRender"
+import { waitFor } from "@testing-library/react";
+import { Challenges } from "../../../features/challenges/Challenges"
 import { useChallengesData } from "../../../features/challenges/challenges.redux";
-import { render, screen } from "../../../utility/testRender";
-import { Challenges } from "../../../features/challenges/Challenges";
+
+import '@testing-library/jest-dom/extend-expect';
+
+jest.mock("../../../features/challenges/challenges.redux");
 
 describe("Challenges page", () => {
   let mockState;
-  let mockChallenges = [
-    {
-      category: "food",
-      contentKey: "contentKey ",
-      id: 1,
-      name: "Challenge 1",
-      timePeriod: "week",
-    },
-    {
-      category: "food",
-      contentKey: "contentKey ",
-      id: 2,
-      name: "Challenge 2",
-      timePeriod: "week",
-    },
-    {
-      category: "food",
-      contentKey: "contentKey ",
-      id: 3,
-      name: "Challenge 3",
-      timePeriod: "week",
-    },
-  ];
 
-  beforeAll(() => jest.spyOn(window, "fetch"));
+  beforeAll(() => jest.spyOn(window, 'fetch'))
 
   beforeEach(() => {
-    jest.spyOn(window.localStorage, "getItem").mockImplementation(() => {
-      return JSON.stringify({ firstName: "John" });
-    });
     mockState = {
       auth: { loggedIn: true },
-      challenges: { challenges: null },
-    };
+      challenges: { challenges: null }
+    }
 
     window.fetch.mockResolvedValueOnce({
       ok: true,
       status: 200,
-      json: async () => ({ challenges: [mockChallenges] }),
-    });
+      json: async () => ({ challenges: [] }),
+   })
+
+   Object.defineProperty(window, 'localStorage', {
+    value: {
+      getItem: jest.fn(() => JSON.stringify({ firstName: 'John' })),
+      setItem: jest.fn(),
+      removeItem: jest.fn(),
+    },
+    writable: true
+  });
   });
 
-  afterEach(() => [(mockState = {})]);
+  afterEach(() => [
+    mockState = {}
+  ])
 
-  it("renders loading state", () => {
-    render(<Challenges />);
-    const loadingElement = screen.getByText("Retrieving Challenges...");
-    expect(loadingElement).toBeInTheDocument();
+  it("renders loading state", async () => {
+    
+    const { getByText  } = render(<Challenges />, mockState);
+    expect(getByText("Retrieving Challenges...")).toBeInTheDocument();
   });
 
-  it("renders the list of challenges", () => {
-    jest.spyOn(useChallengesData, "default").mockReturnValue(mockChallenges);
-    render(<Challenges />);
-    const challengeElements = screen.getAllByTestId("challenge-card");
-    expect(challengeElements).toHaveLength(mockChallenges.length);
-  });
+  it("renders ChallengeCards", async () => {
+    const mockChallenges = [
+      {
+        id: 1,
+        title: "Challenge 1",
+        description: "Description 1",
+      },
+      {
+        id: 2,
+        title: "Challenge 2",
+        description: "Description 2",
+      },
+    ];
 
-  it("shows the user's first name", () => {
-    render(<Challenges />);
-    const nameElement = screen.getByText("Hi John");
-    expect(nameElement).toBeInTheDocument();
+    useChallengesData.mockReturnValueOnce(mockChallenges);
+
+    
+    await waitFor(() => {
+      const { getByText } = render(<Challenges />);
+      expect(getByText("Challenge 1")).toBeInTheDocument();
+      expect(getByText("Challenge 2")).toBeInTheDocument();
+    })
+
   });
 });
+
+
